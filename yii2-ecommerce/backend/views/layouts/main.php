@@ -7,6 +7,7 @@ use common\widgets\Alert;
 use backend\assets\AppAsset;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Breadcrumbs;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -55,7 +56,7 @@ AppAsset::register($this);
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="<?php echo Url::to(['/products/index'])?>">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Products</span></a>
             </li>
