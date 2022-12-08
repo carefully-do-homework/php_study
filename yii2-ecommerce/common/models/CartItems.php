@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
@@ -54,7 +54,7 @@ class CartItems extends \yii\db\ActiveRecord
     /**
      * Gets query for [[CreatedBy]].
      *
-     * @return \yii\db\ActiveQuery|UserQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\UserQuery
      */
     public function getCreatedBy()
     {
@@ -64,7 +64,7 @@ class CartItems extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Product]].
      *
-     * @return \yii\db\ActiveQuery|ProductsQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\ProductsQuery
      */
     public function getProduct()
     {
@@ -73,10 +73,10 @@ class CartItems extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return CartItemsQuery the active query used by this AR class.
+     * @return \common\models\query\CartItemsQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new CartItemsQuery(get_called_class());
+        return new \common\models\query\CartItemsQuery(get_called_class());
     }
 }

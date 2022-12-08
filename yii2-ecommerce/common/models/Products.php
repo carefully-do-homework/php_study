@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
@@ -72,7 +72,7 @@ class Products extends \yii\db\ActiveRecord
     /**
      * Gets query for [[CartItems]].
      *
-     * @return \yii\db\ActiveQuery|CartItemsQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\CartItemsQuery
      */
     public function getCartItems()
     {
@@ -82,7 +82,7 @@ class Products extends \yii\db\ActiveRecord
     /**
      * Gets query for [[CreatedBy]].
      *
-     * @return \yii\db\ActiveQuery|UserQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\UserQuery
      */
     public function getCreatedBy()
     {
@@ -92,7 +92,7 @@ class Products extends \yii\db\ActiveRecord
     /**
      * Gets query for [[OrderItems]].
      *
-     * @return \yii\db\ActiveQuery|OrderItemsQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\OrderItemsQuery
      */
     public function getOrderItems()
     {
@@ -102,7 +102,7 @@ class Products extends \yii\db\ActiveRecord
     /**
      * Gets query for [[UpdatedBy]].
      *
-     * @return \yii\db\ActiveQuery|UserQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\UserQuery
      */
     public function getUpdatedBy()
     {
@@ -111,10 +111,10 @@ class Products extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return ProductsQuery the active query used by this AR class.
+     * @return \common\models\query\ProductsQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new ProductsQuery(get_called_class());
+        return new \common\models\query\ProductsQuery(get_called_class());
     }
 }

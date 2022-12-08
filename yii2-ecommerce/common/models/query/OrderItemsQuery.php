@@ -1,13 +1,13 @@
 <?php
 
-namespace app\models;
+namespace common\models\query;
 
 /**
- * This is the ActiveQuery class for [[OrderAddresses]].
+ * This is the ActiveQuery class for [[\common\models\OrderItems]].
  *
- * @see OrderAddresses
+ * @see \common\models\OrderItems
  */
-class OrderAddressesQuery extends \yii\db\ActiveQuery
+class OrderItemsQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class OrderAddressesQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return OrderAddresses[]|array
+     * @return \common\models\OrderItems[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class OrderAddressesQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return OrderAddresses|array|null
+     * @return \common\models\OrderItems|array|null
      */
     public function one($db = null)
     {

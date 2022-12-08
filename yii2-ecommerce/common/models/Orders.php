@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
@@ -67,7 +67,7 @@ class Orders extends \yii\db\ActiveRecord
     /**
      * Gets query for [[CreatedBy]].
      *
-     * @return \yii\db\ActiveQuery|UserQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\UserQuery
      */
     public function getCreatedBy()
     {
@@ -77,7 +77,7 @@ class Orders extends \yii\db\ActiveRecord
     /**
      * Gets query for [[OrderAddresses]].
      *
-     * @return \yii\db\ActiveQuery|OrderAddressesQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\OrderAddressesQuery
      */
     public function getOrderAddresses()
     {
@@ -87,7 +87,7 @@ class Orders extends \yii\db\ActiveRecord
     /**
      * Gets query for [[OrderItems]].
      *
-     * @return \yii\db\ActiveQuery|OrderItemsQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\OrderItemsQuery
      */
     public function getOrderItems()
     {
@@ -96,10 +96,10 @@ class Orders extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return OrdersQuery the active query used by this AR class.
+     * @return \common\models\query\OrdersQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new OrdersQuery(get_called_class());
+        return new \common\models\query\OrdersQuery(get_called_class());
     }
 }

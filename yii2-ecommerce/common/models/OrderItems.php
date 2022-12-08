@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
@@ -60,7 +60,7 @@ class OrderItems extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Order]].
      *
-     * @return \yii\db\ActiveQuery|OrdersQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\OrdersQuery
      */
     public function getOrder()
     {
@@ -70,7 +70,7 @@ class OrderItems extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Product]].
      *
-     * @return \yii\db\ActiveQuery|ProductsQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\ProductsQuery
      */
     public function getProduct()
     {
@@ -79,10 +79,10 @@ class OrderItems extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return OrderItemsQuery the active query used by this AR class.
+     * @return \common\models\query\OrderItemsQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new OrderItemsQuery(get_called_class());
+        return new \common\models\query\OrderItemsQuery(get_called_class());
     }
 }
