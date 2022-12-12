@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1a9a0dc6b8deddf4811b23c412744f1",
+    "content-hash": "376bf0f1dc3476c479eae20d671a92e4",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -388,6 +388,57 @@
                 "source": "https://github.com/ezyang/htmlpurifier/tree/v4.16.0"
             },
             "time": "2022-09-18T07:06:19+00:00"
+        },
+        {
+            "name": "ibunao/yii2-weditor",
+            "version": "v0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/echo-ding/yii2-wang-editor.git",
+                "reference": "603f75217c74cf2f61732d5cb1edcc9ffe7d8da4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/echo-ding/yii2-wang-editor/zipball/603f75217c74cf2f61732d5cb1edcc9ffe7d8da4",
+                "reference": "603f75217c74cf2f61732d5cb1edcc9ffe7d8da4",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "weditor\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "丁冉",
+                    "email": "275122510@qq.com",
+                    "homepage": "http://www.bunao.me"
+                }
+            ],
+            "description": "wangEditor for yii",
+            "homepage": "https://github.com/echo-ding/yii2-wang-editor",
+            "keywords": [
+                "editor",
+                "wangEditor",
+                "weditor",
+                "yiieditor"
+            ],
+            "support": {
+                "issues": "https://github.com/echo-ding/yii2-wang-editor/issues",
+                "source": "https://github.com/echo-ding/yii2-wang-editor/tree/master"
+            },
+            "time": "2017-05-25T05:48:20+00:00"
         },
         {
             "name": "paragonie/random_compat",
