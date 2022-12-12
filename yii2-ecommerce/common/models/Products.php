@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\FileHelper;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "products".
@@ -26,9 +28,13 @@ use Yii;
 class Products extends \yii\db\ActiveRecord
 {
     /**
+     * @var UploadedFile
+    */
+    public $imageFile;
+    /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'products';
     }
@@ -41,6 +47,7 @@ class Products extends \yii\db\ActiveRecord
         return [
             [['name', 'price', 'status'], 'required'],
             [['description'], 'string'],
+            [['imageFile'], 'image', 'extensions' => 'jpg, jpeg, gif, webp, png', 'maxSize' => 1024 * 1024 * 5],
             [['price'], 'number'],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 255],
@@ -60,6 +67,7 @@ class Products extends \yii\db\ActiveRecord
             'name' => 'Name',
             'description' => 'Description',
             'image' => 'Image',
+            'imageFile' => 'imageFile',
             'price' => 'Price',
             'status' => 'published',
             'created_at' => 'Created At',
@@ -116,5 +124,23 @@ class Products extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \common\models\query\ProductsQuery(get_called_class());
+    }
+
+    public function save($runValidation = true, $attributeNames = null)
+    {
+        if($this->imageFile)
+        {
+            $this->image = yii::$app->security->generateRandomString(32) . $this->imageFile->name;
+        }
+//        echo '<pre>';
+//        var_dump($this->image);
+//        echo '</pre>';
+//        exit;
+        $fullPath = yii::getAlias('@frontend') . '/web/storage/products/' . $this->image;
+        $dir = dirname($fullPath);
+        FileHelper::createDirectory($dir);
+        $this->imageFile->saveAs($fullPath);
+
+        $ok = parent::save($runValidation, $attributeNames);
     }
 }

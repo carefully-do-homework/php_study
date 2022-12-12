@@ -10,14 +10,16 @@ use yii\bootstrap5\ActiveForm;
 
 <div class="products-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'description')->widget(weditor\Weditor::class,
         ['width'=>1000, 'height'=>200]); ?>
 
-    <?= $form->field($model, 'image')->fileInput() ?>
+    <?= $form->field($model, 'imageFile')->textInput([
+            'type' => 'file'
+    ]) ?>
 
     <?= $form->field($model, 'price')->textInput([
             'maxlength' => true,
