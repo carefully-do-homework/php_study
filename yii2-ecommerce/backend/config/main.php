@@ -31,7 +31,7 @@ return [
                 [
                     'class' => \yii\log\FileTarget::class,
                     'levels' => ['error', 'warning', 'info', 'trace'],
-                    'logVars' => ['*'],
+                    'logVars' => ['error'],
                     'logFile' => '@runtime/logs/pay.log',
                 ],
             ],

@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 
@@ -54,6 +56,19 @@ class Products extends \yii\db\ActiveRecord
             [['image'], 'string', 'max' => 2000],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
         ];
     }
 
@@ -128,28 +143,30 @@ class Products extends \yii\db\ActiveRecord
 
     public function save($runValidation = true, $attributeNames = null)
     {
-        if($this->imageFile)
-        {
-            $this->image = '/products/' . yii::$app->security->generateRandomString(32) . $this->imageFile->name;
-        }
-
         //数据库事务操作
         $transaction = yii::$app->db->beginTransaction();
         $ok = parent::save($runValidation, $attributeNames);
 
         if($ok) {
-            //保存图片的路径
-            $fullPath = yii::getAlias('@frontend') . '/web/storage' . $this->image;
-            $dir = dirname($fullPath);
+            if($this->imageFile)
+            {
+                $this->image = '/products/' . yii::$app->security->generateRandomString(32) . $this->imageFile->name;
 
-            //创建文件夹 && 保存图片
-            if(!FileHelper::createDirectory($dir) || !$this->imageFile->saveAs($this->image)) {
-                $transaction->rollBack();
-                return false;
+                //保存图片的路径
+                $fullPath = yii::getAlias('@frontend') . '/web/storage' . $this->image;
+                $dir = dirname($fullPath);
+
+                //创建文件夹 && 保存图片
+                if(!FileHelper::createDirectory($dir) || !$this->imageFile->saveAs($fullPath)) {
+                    $transaction->rollBack();
+                    return false;
+                }
             }
             $transaction->commit();
         }
 
         return $ok;
     }
+
+
 }

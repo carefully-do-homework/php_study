@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Products;
 use backend\models\search\ProductsSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -71,6 +72,9 @@ class ProductsController extends Controller
         $model = new Products();
         $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 
+        //创建商品时记录用户
+        $model->created_by = $this->getUserId();
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -94,6 +98,7 @@ class ProductsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+//        $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -132,5 +137,12 @@ class ProductsController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
+     * 获取用户名
+     */
+    public function getUserId() {
+        return yii::$app->user->identity->id;
     }
 }
