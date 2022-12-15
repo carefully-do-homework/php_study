@@ -31,14 +31,65 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'description:ntext',
-            'image',
-            'price',
-            'status',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
+            'description:html',
+            [
+                    'attribute' => 'image',
+                    'format' => 'html',
+                    'value' => function($model) {
+                        /**
+                         * @var \common\models\Products $model
+                         */
+                        return Html::img($model->getImgUrl());
+                    }
+
+            ],
+            [
+                    'attribute' => 'price',
+                    'value' => function($model) {
+                        /**
+                         * @var \common\models\Products $model
+                         */
+                        return '￥' . $model->price;
+                    }
+            ],
+            [
+                    'attribute' => 'status',
+                    'format' => 'html',
+                    'value' => function($model) {
+                        /**
+                         * @var \common\models\Products $model
+                         */
+                        return Html::tag('span', $model->status ? 'Active' : 'DisActive', [
+                            'class' => $model->status ? 'badge text-bg-success' : 'badge text-bg-danger'
+                        ]);
+                    }
+            ],
+            [
+                    'attribute' => 'created_at',
+                    'format' => 'html',
+                    'value' => function($model) {
+                        /**
+                         * @var \common\models\Products $model
+                         */
+                        return Html::tag('span', date('Y-m-d H:i', $model->created_at), [
+                            'style' => 'white-space:nowrap'
+                        ]);
+                    }
+            ],
+            [
+                    'attribute' => 'updated_at',
+                    'format' => 'html',
+                    'value' => function($model) {
+                        /**
+                         * @var \common\models\Products $model
+                         */
+                        return Html::tag('span', $model->updated_at ? date('Y-m-d H:i', $model->updated_at) : 'Null', [
+                            'style' => 'white-space:nowrap'
+                        ]);
+                    }
+            ],
+            'createdBy.username',
+            'updatedBy.username',
         ],
     ]) ?>
 

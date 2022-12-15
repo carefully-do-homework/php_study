@@ -145,27 +145,37 @@ class Products extends \yii\db\ActiveRecord
     {
         //数据库事务操作
         $transaction = yii::$app->db->beginTransaction();
+
+        if($this->imageFile)
+        {
+            $this->image = '/products/' . yii::$app->security->generateRandomString(32) . $this->imageFile->name;
+
+            //保存图片的路径
+            $fullPath = yii::getAlias('@frontend') . '/web/storage' . $this->image;
+            $dir = dirname($fullPath);
+        }
+
         $ok = parent::save($runValidation, $attributeNames);
 
         if($ok) {
-            if($this->imageFile)
-            {
-                $this->image = '/products/' . yii::$app->security->generateRandomString(32) . $this->imageFile->name;
-
-                //保存图片的路径
-                $fullPath = yii::getAlias('@frontend') . '/web/storage' . $this->image;
-                $dir = dirname($fullPath);
-
+            if($this->image) {
                 //创建文件夹 && 保存图片
                 if(!FileHelper::createDirectory($dir) || !$this->imageFile->saveAs($fullPath)) {
                     $transaction->rollBack();
                     return false;
                 }
             }
+
+            //最后把数据存入数据库
             $transaction->commit();
         }
 
         return $ok;
+    }
+
+    //获取图片Url
+    public function getImgUrl() {
+        return yii::$app->params['frontend'] . '/storage' . $this->image;
     }
 
 
