@@ -31,4 +31,10 @@ class ProductsQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+
+    //返回 已发布 的商品
+    public function published(): ProductsQuery
+    {
+        return $this->andWhere(['status' => 1]);
+    }
 }
