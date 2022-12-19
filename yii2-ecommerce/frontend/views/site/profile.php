@@ -17,7 +17,10 @@ use yii\helpers\Html;
         <div class="card-body">
             <div>
 
-                <?php $AddressForm = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+                <?php $AddressForm = ActiveForm::begin([
+                    'options' => ['enctype' => 'multipart/form-data'],
+                    'action' => ['/user-addresses/update']
+                ]); ?>
 
                 <?= $AddressForm->field($userAddress, 'address')->textInput(['maxlength' => true]) ?>
 
