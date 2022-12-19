@@ -5,7 +5,6 @@
 
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
-use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
@@ -36,32 +35,45 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+        [
+            'label' => 'Home',
+            'options' => [
+                'style' => 'text-align:left; flex: 1'
+            ],
+            'url' => ['/site/index']
+        ],
     ];
+
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+    } else {
+        $menuItems[] = [
+            'label' => yii::$app->user->identity->username,
+            'items' => [
+                [
+                    'label' => 'profile',
+                    'url' => ['site/profile'],
+                ],
+                [
+                    'label' => 'logout',
+                    'url' => ['site/logout'],
+                    'linkOptions' => [
+                        'data-method' => 'post'
+                    ]
+                ],
+            ],
+        ];
     }
 
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
+        'options' => [
+            'class' => 'navbar-nav me-auto mb-2 mb-md-0',
+            'style' => 'width: 100%'
+        ],
         'items' => $menuItems,
     ]);
-    if (Yii::$app->user->isGuest) {
-        echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
-    } else {
-        echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                [
-                    'class' => 'btn btn-link logout text-decoration-none',
-                    'style' => 'color: var(--bs-nav-link-color)',
-                    'data' => [
-                        'confirm' => 'Are you sure? you want to logout?'
-                    ]
-                ]
-            )
-            . Html::endForm();
-    }
+
     NavBar::end();
     ?>
 </header>

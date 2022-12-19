@@ -211,8 +211,14 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_reset_token = null;
     }
 
+    //获取用户名
     public function getName() 
     {
         return $this->username;
+    }
+
+    //获取当前用户地址信息
+    public function getAddresses() {
+        return $this->hasMany(UserAddresses::class, ['user_id' => 'id']);
     }
 }

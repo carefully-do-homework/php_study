@@ -175,7 +175,11 @@ class Products extends \yii\db\ActiveRecord
 
     //获取图片Url
     public function getImgUrl() {
-        return yii::$app->params['frontend'] . '/storage' . $this->image;
+        if($this->image) {
+            return yii::$app->params['frontend'] . '/storage' . $this->image;
+        }else {
+            return yii::$app->params['frontend'] . 'img/no_img.jpg';
+        }
     }
 
 

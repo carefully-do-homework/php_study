@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Products;
+use common\models\UserAddresses;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -231,6 +232,17 @@ class SiteController extends Controller
 
         return $this->render('resendVerificationEmail', [
             'model' => $model
+        ]);
+    }
+
+    public function actionProfile() {
+        $userModel = yii::$app->user->identity;
+        $hasUserAddress = $userModel->addresses;
+        $userAddress= $hasUserAddress ?: new UserAddresses();
+
+        return $this->render('profile', [
+            'userModel' => $userModel,
+            'userAddress' => $userAddress[0]
         ]);
     }
 }
