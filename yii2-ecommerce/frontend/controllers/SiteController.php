@@ -237,12 +237,11 @@ class SiteController extends Controller
 
     public function actionProfile() {
         $userModel = yii::$app->user->identity;
-        $hasUserAddress = $userModel->addresses;
-        $userAddress= $hasUserAddress ?: new UserAddresses();
+        $userAddress = $userModel->address;
 
         return $this->render('profile', [
             'userModel' => $userModel,
-            'userAddress' => $userAddress[0]
+            'userAddress' => $userAddress
         ]);
     }
 }

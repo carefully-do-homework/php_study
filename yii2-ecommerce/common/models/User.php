@@ -24,6 +24,7 @@ use yii\web\IdentityInterface;
  * @property string $password write-only password
  *
  * @property UserAddresses[] $addresses
+ * * @property UserAddresses $address
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -219,8 +220,17 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->username;
     }
 
-    //获取当前用户地址信息
-    public function getAddresses() {
+    //获取当前用户所有地址信息
+    public function getAddresses()
+    {
         return $this->hasMany(UserAddresses::class, ['user_id' => 'id']);
+    }
+
+    //获取当前用户单个地址信息
+    public function getAddress()
+    {
+        $address = $this->addresses[0] ?: new UserAddresses();
+        $address->user_id = $this->id;
+        return $address;
     }
 }

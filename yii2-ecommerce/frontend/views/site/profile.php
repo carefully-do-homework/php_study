@@ -3,6 +3,7 @@
 /** @var common\models\UserAddresses $userAddress */
 /** @var yii\bootstrap5\ActiveForm $AddressForm */
 /** @var yii\bootstrap5\ActiveForm $UserForm */
+/** @var \yii\web\View $this */
 
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
@@ -15,30 +16,13 @@ use yii\helpers\Html;
             Address information
         </div>
         <div class="card-body">
-            <div>
-
-                <?php $AddressForm = ActiveForm::begin([
-                    'options' => ['enctype' => 'multipart/form-data'],
-                    'action' => ['/user-addresses/update']
-                ]); ?>
-
-                <?= $AddressForm->field($userAddress, 'address')->textInput(['maxlength' => true]) ?>
-
-                <?= $AddressForm->field($userAddress, 'city')->textInput(['maxlength' => true]) ?>
-
-                <?= $AddressForm->field($userAddress, 'state')->textInput(['maxlength' => true]) ?>
-
-                <?= $AddressForm->field($userAddress, 'country')->textInput(['maxlength' => true]) ?>
-
-                <?= $AddressForm->field($userAddress, 'zipcode')->textInput(['maxlength' => true]) ?>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
-                </div>
-
-                <?php ActiveForm::end(); ?>
-
-            </div>
+            <?php \yii\widgets\Pjax::begin([
+                'enablePushState' => false
+            ])?>
+                <?php echo $this->render('_address_update', [
+                    'userAddress' => $userAddress
+                ])?>
+            <?php \yii\widgets\Pjax::end()?>
         </div>
     </div>
     <div class="card  m-3" style="flex: 1">
@@ -46,21 +30,13 @@ use yii\helpers\Html;
             Account information
         </div>
         <div class="card-body">
-            <div>
-
-                <?php $UserForm = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-
-                <?= $UserForm->field($userModel, 'username')->textInput(['maxlength' => true]) ?>
-
-                <?= $UserForm->field($userModel, 'email')->textInput(['maxlength' => true]) ?>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
-                </div>
-
-                <?php ActiveForm::end(); ?>
-
-            </div>
+            <?php \yii\widgets\Pjax::begin([
+                'enablePushState' => false
+            ])?>
+                <?php echo $this->render('_account_update', [
+                    'userModel' => $userModel
+                ])?>
+            <?php \yii\widgets\Pjax::end()?>
         </div>
     </div>
 </div>

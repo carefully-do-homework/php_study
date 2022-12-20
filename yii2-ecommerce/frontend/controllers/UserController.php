@@ -2,17 +2,17 @@
 
 namespace frontend\controllers;
 
-use common\models\UserAddresses;
-use common\models\query\UserAddressesQuery;
+use common\models\User;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UserAddressesController implements the CRUD actions for UserAddresses model.
+ * UserController implements the CRUD actions for User model.
  */
-class UserAddressesController extends Controller
+class UserController extends Controller
 {
     /**
      * @inheritDoc
@@ -33,24 +33,34 @@ class UserAddressesController extends Controller
     }
 
     /**
-     * Lists all UserAddresses models.
+     * Lists all User models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new UserAddressesQuery();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => User::find(),
+            /*
+            'pagination' => [
+                'pageSize' => 50
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+            */
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single UserAddresses model.
-     * @param int $id ID
+     * Displays a single User model.
+     * @param int $id
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -62,13 +72,13 @@ class UserAddressesController extends Controller
     }
 
     /**
-     * Creates a new UserAddresses model.
+     * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new UserAddresses();
+        $model = new User();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -86,25 +96,24 @@ class UserAddressesController extends Controller
 
     public function actionUpdate()
     {
-        $user = yii::$app->user->identity;
-        $userAddress = $user->address;
-
+        $model = yii::$app->user->identity;
         $success = false;
+//        var_dump($model);
 
-        if ($this->request->isPost && $userAddress->load($this->request->post()) && $userAddress->save()) {
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             $success = true;
         }
 
-        return $this->renderAjax('/site/_address_update', [
-            'userAddress' => $userAddress,
+        return $this->renderAjax('/site/_account_update', [
+            'userModel' => $model,
             'success' => $success
         ]);
     }
 
     /**
-     * Deletes an existing UserAddresses model.
+     * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
+     * @param int $id
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -116,15 +125,15 @@ class UserAddressesController extends Controller
     }
 
     /**
-     * Finds the UserAddresses model based on its primary key value.
+     * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return UserAddresses the loaded model
+     * @param int $id
+     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = UserAddresses::findOne(['id' => $id])) !== null) {
+        if (($model = User::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
