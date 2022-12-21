@@ -32,7 +32,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'profile'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -40,7 +40,7 @@ class SiteController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'profile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -239,7 +239,7 @@ class SiteController extends Controller
         $userModel = yii::$app->user->identity;
         $userAddress = $userModel->address;
 
-        return $this->render('profile', [
+        return $this->render('/profile/profile', [
             'userModel' => $userModel,
             'userAddress' => $userAddress
         ]);

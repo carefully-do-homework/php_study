@@ -48,6 +48,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+        $menuItems[] = ['label' => 'cart', 'url' => ['cart/index']];
         $menuItems[] = [
             'label' => yii::$app->user->identity->username,
             'items' => [

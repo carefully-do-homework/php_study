@@ -95,7 +95,7 @@ class UserAddressesController extends Controller
             $success = true;
         }
 
-        return $this->renderAjax('/site/_address_update', [
+        return $this->renderAjax('/profile/_address_update', [
             'userAddress' => $userAddress,
             'success' => $success
         ]);

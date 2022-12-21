@@ -104,7 +104,7 @@ class UserController extends Controller
             $success = true;
         }
 
-        return $this->renderAjax('/site/_account_update', [
+        return $this->renderAjax('/profile/_account_update', [
             'userModel' => $model,
             'success' => $success
         ]);
