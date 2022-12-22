@@ -9,6 +9,8 @@ use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
+$cartItemCount = $this->params['cartItemCount'];
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -48,7 +50,11 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = ['label' => 'cart', 'url' => ['cart/index']];
+        $menuItems[] = ['label' => '<span style="margin-right: 10px">cart</span>
+                                    <span class="cart-count translate-middle badge rounded-pill bg-danger">' . $cartItemCount . '</span>',
+                        'url' => ['cart/index'],
+                        'encode' => false
+                        ];
         $menuItems[] = [
             'label' => yii::$app->user->identity->username,
             'items' => [
@@ -70,7 +76,7 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => [
             'class' => 'navbar-nav me-auto mb-2 mb-md-0',
-            'style' => 'width: 100%'
+            'style' => 'width: 100%',
         ],
         'items' => $menuItems,
     ]);

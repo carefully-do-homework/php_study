@@ -1,5 +1,5 @@
 <?php
-
+/** @var array $allCartItem*/
 ?>
 
 <table class="table table-striped">
@@ -14,13 +14,15 @@
         </tr>
     </thead>
     <tbody>
+    <?php foreach ($allCartItem as $cartItem)?>
     <tr>
-        <td>@twitter</td>
+        <td><?php echo $cartItem->id?></td>
         <td>@twitter</td>
         <td>@twitter</td>
         <td>@twitter</td>
         <td>@twitter</td>
         <td>@twitter</td>
     </tr>
+    <?php ?>
     </tbody>
 </table>
