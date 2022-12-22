@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "cart_items".
@@ -68,7 +69,7 @@ class CartItems extends \yii\db\ActiveRecord
      */
     public function getProduct()
     {
-        return $this->hasOne(Products::class, ['id' => 'product_id']);
+        return $this->hasMany(Products::class, ['id' => 'product_id']);
     }
 
     /**
@@ -79,4 +80,5 @@ class CartItems extends \yii\db\ActiveRecord
     {
         return new \common\models\query\CartItemsQuery(get_called_class());
     }
+
 }

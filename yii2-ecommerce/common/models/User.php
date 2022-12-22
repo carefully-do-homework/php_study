@@ -233,4 +233,10 @@ class User extends ActiveRecord implements IdentityInterface
         $address->user_id = $this->id;
         return $address;
     }
+
+    public function getConnect(): \yii\db\ActiveQuery
+    {
+        return self::hasMany(Products::class, ['id' => 'product_id'])
+                        ->viaTable(CartItems::tableName(), ['created_by' => 'id']);
+    }
 }

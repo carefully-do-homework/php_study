@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use common\models\CartItems;
 use common\models\Products;
+use common\models\User;
 use Yii;
 use yii\base\BaseObject;
 use yii\web\Controller;
@@ -16,6 +17,11 @@ class CartController extends \frontend\base\BaseController {
     public function actionIndex()
      {
         $allCartItem = CartItems::findAll(['created_by' => yii::$app->user->id]);
+        $user = new User();
+        $user->id = yii::$app->user->id;
+//        var_dump($user->connect);
+
+
         return $this->render('index', [
             'allCartItem' => $allCartItem
         ]);
