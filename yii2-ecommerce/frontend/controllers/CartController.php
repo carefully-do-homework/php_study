@@ -6,6 +6,7 @@ use common\models\Products;
 use common\models\User;
 use Yii;
 use yii\base\BaseObject;
+use yii\base\ViewNotFoundException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -16,14 +17,23 @@ class CartController extends \frontend\base\BaseController {
 
     public function actionIndex()
      {
-        $allCartItem = CartItems::findAll(['created_by' => yii::$app->user->id]);
         $user = new User();
         $user->id = yii::$app->user->id;
-//        var_dump($user->connect);
+
+        //当前用户购物车的商品信息
+        $allCartItem = $user->connect;
+
+         //当前用户购物车的各个商品数量
+        $CartItem_quantity = [];
+        $current_user_cart = CartItems::findAll(['created_by' => $user]);
+        foreach ($current_user_cart as $cartItem) {
+            $CartItem_quantity[$cartItem->product_id] = $cartItem->quantity;
+        }
 
 
         return $this->render('index', [
-            'allCartItem' => $allCartItem
+            'allCartItem' => $allCartItem,
+            'CartItem_quantity' => $CartItem_quantity
         ]);
      }
 
@@ -74,5 +84,18 @@ class CartController extends \frontend\base\BaseController {
                  'cartItemCount' => $cartItemCount
              ];
          }
+     }
+
+    /**
+     * 删除车增加商品
+     */
+     public function actionDelete($id) {
+        if(!isset($id)) {
+            return new ViewNotFoundException('id must be taking');
+        }
+
+        CartItems::deleteAll(['product_id' => $id, 'created_by' => yii::$app->user->id]);
+
+        return $this->redirect('index');
      }
  }

@@ -178,7 +178,7 @@ class Products extends \yii\db\ActiveRecord
         if($this->image) {
             return yii::$app->params['frontend'] . '/storage' . $this->image;
         }else {
-            return yii::$app->params['frontend'] . 'img/no_img.jpg';
+            return yii::$app->params['frontend'] . '/img/no_img.jpg';
         }
     }
 
