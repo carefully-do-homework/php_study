@@ -36,8 +36,14 @@
                         <?php echo \yii\helpers\Html::img($cartItem->imgUrl, ['style' => 'width: 100px']);?>
                     </td>
                     <td>¥<?php echo $cartItem->price ?></td>
-                    <td><?php echo $quantity ?></td>
-                    <td>¥<?php echo $quantity *  $cartItem->price ?></td>
+                    <td class="quantity_operate" data-key="<?php echo $cartItem->id?>">
+                        <a type="button" class="btn btn-outline-secondary btn-sm subtract" >-</a>
+                        <span style="margin: 0 5px"><?php echo $quantity ?></span>
+                        <a type="button" class="btn btn-outline-secondary btn-sm append">+</a>
+                    </td>
+                    <td class="total_price" data-key="<?php echo $cartItem->id?>">
+                        ¥<?php echo $quantity *  $cartItem->price ?>
+                    </td>
                     <td>
                         <?php echo \yii\helpers\Html::a('delete', ['/cart/delete', 'id' => $cartItem->id], [
                             'class' => 'btn btn-outline-danger',
@@ -48,6 +54,6 @@
             <?php }?>
             </tbody>
         </table>
-        <button type="button" class="btn btn-primary" style="float: right">checkout</button>
+        <a type="button" class="btn btn-primary" style="float: right" href="/cart/checkout">checkout</a>
     </div>
 <?php endif ?>

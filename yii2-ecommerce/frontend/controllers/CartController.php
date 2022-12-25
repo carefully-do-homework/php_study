@@ -4,15 +4,31 @@ namespace frontend\controllers;
 use common\models\CartItems;
 use common\models\Products;
 use common\models\User;
+use common\models\UserAddresses;
 use Yii;
 use yii\base\BaseObject;
 use yii\base\ViewNotFoundException;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class CartController extends \frontend\base\BaseController {
 
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter:: class,
+                'actions' => [
+                    'index'  => [ 'get'],            //只允许get方式访问
+                    'create' => [ 'post'],          //只允许用post方式访问
+                    'update' => [ 'post'],
+                    'delete' => [ 'post']
+                ],
+            ],
+        ];
+    }
 
 
     public function actionIndex()
@@ -87,7 +103,7 @@ class CartController extends \frontend\base\BaseController {
      }
 
     /**
-     * 删除车增加商品
+     * 购物车删除商品
      */
      public function actionDelete($id) {
         if(!isset($id)) {
@@ -98,4 +114,66 @@ class CartController extends \frontend\base\BaseController {
 
         return $this->redirect('index');
      }
+
+    /**
+     * 购物车更新商品信息
+     */
+    public function actionUpdate() {
+        $id = trim(yii::$app->request->post('id'));
+        if(!isset($id)) {
+            return new ViewNotFoundException('id must be taking');
+        }
+
+        $model = CartItems::findOne(['product_id' => $id]);
+        if(!isset($model)) {
+            return new ViewNotFoundException('this cartItem not found');
+        }
+
+        $quantity_count = trim(yii::$app->request->post('quantity_count'));
+        $model->quantity = $quantity_count;
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if (!$model->save())
+        {
+            return [
+                'success' => false
+            ];
+        }
+
+        $product_price = Products::findOne(['id' => $model->product_id])->price;
+
+        return [
+            'success' => true,
+            'quantity_count' => $model->quantity,
+            'total_price' => $model->quantity * $product_price
+        ];
+    }
+
+    /**
+     * 购物车选好商品后，点击checkout
+     */
+    public function actionCheckout() {
+        $userModel = yii::$app->user->identity;
+        $addressModel = UserAddresses::findOne(['user_id' => yii::$app->user->identity->id]);
+
+        //没有地址信息，先要完善地址信息
+        if(!isset($addressModel)) {
+            $this->view->params['isShowRefineAddressNotice'] = true;
+
+            $userAddress = $userModel->address;
+            return $this->render('/profile/profile', [
+                'userModel' => $userModel,
+                'userAddress' => $userAddress
+            ]);
+        }
+
+        $totalPrice = CartItems::getTotalPrice();
+        var_dump($totalPrice);
+
+//        return $this->render('checkout', [
+//            'userModel' => $userModel,
+//            'addressModel' => $addressModel,
+//            'totalPrice' => $totalPrice
+//        ]);
+    }
  }

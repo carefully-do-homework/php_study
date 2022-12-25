@@ -8,7 +8,14 @@
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
+$isShowRefineAddressNotice = $this->params['isShowRefineAddressNotice'] ?? false;
 ?>
+
+<?php if (isset($isShowRefineAddressNotice) && $isShowRefineAddressNotice == true): ?>
+    <div class="alert alert-danger" role="alert">
+        you should refine address information first, and then checkout.
+    </div>
+<?php endif ?>
 
 <div style="display: flex">
     <div class="card  m-3" style="flex: 1">

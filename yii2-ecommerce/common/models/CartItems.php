@@ -81,4 +81,14 @@ class CartItems extends \yii\db\ActiveRecord
         return new \common\models\query\CartItemsQuery(get_called_class());
     }
 
+    //获取商品总价
+    public static function getTotalPrice() {
+        $userModel = new User();
+        $userModel->id = yii::$app->user->id;
+
+        $allProduct = $userModel->hasMany(Products::class, ['id' => 'product_id'])
+                        ->viaTable(CartItems::tableName(), ['created_by' => 'id']);
+
+        var_dump($allProduct);
+    }
 }
