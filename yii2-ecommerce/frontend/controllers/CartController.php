@@ -168,12 +168,11 @@ class CartController extends \frontend\base\BaseController {
         }
 
         $totalPrice = CartItems::getTotalPrice();
-        var_dump($totalPrice);
 
-//        return $this->render('checkout', [
-//            'userModel' => $userModel,
-//            'addressModel' => $addressModel,
-//            'totalPrice' => $totalPrice
-//        ]);
+        return $this->render('checkout', [
+            'userModel' => $userModel,
+            'addressModel' => $addressModel,
+            'totalPrice' => $totalPrice
+        ]);
     }
  }

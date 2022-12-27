@@ -24,7 +24,8 @@ use yii\web\IdentityInterface;
  * @property string $password write-only password
  *
  * @property UserAddresses[] $addresses
- * * @property UserAddresses $address
+ * @property UserAddresses $address
+ * @property yii\db\ActiveQuery $connect
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -242,7 +243,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getConnect(): \yii\db\ActiveQuery
     {
-        return self::hasMany(Products::class, ['id' => 'product_id'])
+        return $this->hasMany(Products::class, ['id' => 'product_id'])
                         ->viaTable(CartItems::tableName(), ['created_by' => 'id']);
     }
 }

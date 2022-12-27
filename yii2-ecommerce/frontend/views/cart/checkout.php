@@ -3,6 +3,7 @@
 /** @var yii\bootstrap5\ActiveForm $UserForm*/
 /** @var common\models\UserAddresses $addressModel*/
 /** @var yii\bootstrap5\ActiveForm $AddressForm*/
+/** @var string $totalPrice */
 
 use yii\bootstrap5\ActiveForm;
 ?>
@@ -46,7 +47,7 @@ use yii\bootstrap5\ActiveForm;
         <div class="card-body" style="position: relative">
             <div style="border-bottom: 1px solid #eee; overflow: hidden; padding-bottom: 5px">
                 <span style="float: left">Total Price</span>
-                <span style="float: right">￥123.00</span>
+                <span style="float: right">￥<?php echo $totalPrice ?></span>
             </div>
             <a class="btn btn-primary" style="position: absolute;bottom: 10px;right: 10px">continue</a>
         </div>
