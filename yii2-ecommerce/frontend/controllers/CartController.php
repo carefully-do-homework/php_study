@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\service\Alipay;
 use common\models\CartItems;
 use common\models\Products;
 use common\models\User;
@@ -174,5 +175,22 @@ class CartController extends \frontend\base\BaseController {
             'addressModel' => $addressModel,
             'totalPrice' => $totalPrice
         ]);
+    }
+
+    /**
+     * 点击continue按钮，进行支付宝支付
+     */
+    public function actionContinue() {
+        $alipay = new Alipay();
+        $totalPrice = CartItems::getTotalPrice();
+
+        $alipay->pay('商品结账', hexdec(uniqid()), $totalPrice, 'http://www.baidu.com');
+    }
+
+    /**
+     * 支付完毕
+     */
+    public function actionPaySuccess() {
+
     }
  }

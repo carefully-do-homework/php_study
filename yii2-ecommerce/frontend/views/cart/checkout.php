@@ -49,7 +49,7 @@ use yii\bootstrap5\ActiveForm;
                 <span style="float: left">Total Price</span>
                 <span style="float: right">￥<?php echo $totalPrice ?></span>
             </div>
-            <a class="btn btn-primary" style="position: absolute;bottom: 10px;right: 10px">continue</a>
+            <a class="btn btn-primary" style="position: absolute;bottom: 10px;right: 10px" href="/cart/continue">continue</a>
         </div>
     </div>
 </div>
