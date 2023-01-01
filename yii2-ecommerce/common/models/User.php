@@ -221,6 +221,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->username;
     }
 
+    //获取email
+    public function getEmail() {
+        return $this->email;
+    }
+
     //获取当前用户所有地址信息
     public function getAddresses()
     {

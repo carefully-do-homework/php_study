@@ -47,7 +47,8 @@
                     <td>
                         <?php echo \yii\helpers\Html::a('delete', ['/cart/delete', 'id' => $cartItem->id], [
                             'class' => 'btn btn-outline-danger',
-                            'data-confirm' => 'do you want to delete that?'
+                            'data-confirm' => 'do you want to delete that?',
+                            'data-method' => 'post'
                         ]) ?>
                     </td>
                 </tr>

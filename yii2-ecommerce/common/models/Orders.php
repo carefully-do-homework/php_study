@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "orders".
@@ -10,8 +12,7 @@ use Yii;
  * @property int $id
  * @property float $total_price
  * @property int $status
- * @property string $firstname
- * @property string $lastname
+ * @property string $username
  * @property string $email
  * @property string|null $transaction_id
  * @property int|null $created_at
@@ -37,12 +38,24 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['total_price', 'status', 'firstname', 'lastname', 'email'], 'required'],
+            [['total_price', 'status', 'username', 'email'], 'required'],
             [['total_price'], 'number'],
             [['status', 'created_at', 'created_by'], 'integer'],
-            [['firstname', 'lastname'], 'string', 'max' => 45],
+            [['username'], 'string', 'max' => 255],
             [['email', 'transaction_id'], 'string', 'max' => 255],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'created_at',
+                ]
+            ],
         ];
     }
 
@@ -55,8 +68,7 @@ class Orders extends \yii\db\ActiveRecord
             'id' => 'ID',
             'total_price' => 'Total Price',
             'status' => 'Status',
-            'firstname' => 'Firstname',
-            'lastname' => 'Lastname',
+            'username' => 'Username',
             'email' => 'Email',
             'transaction_id' => 'Transaction ID',
             'created_at' => 'Created At',

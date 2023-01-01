@@ -101,6 +101,6 @@ class CartItems extends \yii\db\ActiveRecord
             $totalPrice += $quantity_mapping[$product->id] * $product->price;
         }
 
-        return number_format($totalPrice, '2');
+        return number_format($totalPrice,2,".","");
     }
 }
